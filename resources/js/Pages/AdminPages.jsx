@@ -1,13 +1,13 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
 
-export default function Dashboard(props) {
+export default function AdminPages(props) {
     return (
         <AuthenticatedLayout
             user={props.auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
+                    Landing Page
                 </h2>
             }
         >
@@ -17,8 +17,7 @@ export default function Dashboard(props) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            Title Page : {props.title}
-                            Description : {props.description}
+                            You're logged in!
                         </div>
                     </div>
                 </div>

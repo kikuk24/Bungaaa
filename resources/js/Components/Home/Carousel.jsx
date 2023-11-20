@@ -1,60 +1,60 @@
-const Carousel = () => {
+import { useEffect, useState } from "react";
+import {
+    ArrowLeftCircleIcon,
+    ArrowRightCircleIcon,
+} from "@heroicons/react/24/solid";
+
+const Carousel = ({
+    children: images,
+    autoSlide = false,
+    autoSlideInterval = 3000,
+}) => {
+    const [curr, setCurr] = useState(0);
+
+    const prev = () =>
+        setCurr((curr) => (curr === 0 ? images.length - 1 : curr - 1));
+
+    const next = () =>
+        setCurr((curr) => (curr === images.length - 1 ? 0 : curr + 1));
+
+    useEffect(() => {
+        if (!autoSlide) return;
+        const slideInterval = setInterval(next, autoSlideInterval);
+        return () => clearInterval(slideInterval);
+    }, []);
+
     return (
-        <div className="carousel w-full">
-            <div id="slide1" className="carousel-item relative w-full">
-                <img
-                    src="https://alexandra.bridestory.com/image/upload/dpr_1.0,f_webp,fl_progressive,q_80,c_fill,g_faces,w_576,h_192/assets/wedding-checklist-4-4d95q7xhn.webp"
-                    className="w-full"
-                />
-                <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                    <a href="#slide4" className="btn btn-circle">
-                        ❮
-                    </a>
-                    <a href="#slide2" className="btn btn-circle">
-                        ❯
-                    </a>
-                </div>
+        <div className="overflow-hidden relative mt-[60px]">
+            <div
+                className="flex transition-transform ease-out duration-500 md:max-h-[540px] max-h-[250px]"
+                style={{ transform: `translateX(-${curr * 100}%)` }}
+            >
+                {images}
             </div>
-            <div id="slide2" className="carousel-item relative w-full">
-                <img
-                    src="https://alexandra.bridestory.com/image/upload/dpr_1.0,f_webp,fl_progressive,q_80,c_fill,g_faces,w_576,h_192/assets/wedding-checklist-4-4d95q7xhn.webp"
-                    className="w-full"
-                />
-                <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                    <a href="#slide1" className="btn btn-circle">
-                        ❮
-                    </a>
-                    <a href="#slide3" className="btn btn-circle">
-                        ❯
-                    </a>
-                </div>
+            <div className="absolute inset-0 flex items-center justify-between p-4">
+                <button
+                    onClick={prev}
+                    className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white"
+                >
+                    <ArrowLeftCircleIcon className="w-9 h-9" />
+                </button>
+                <button
+                    onClick={next}
+                    className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white"
+                >
+                    <ArrowRightCircleIcon className="w-9 h-9" />
+                </button>
             </div>
-            <div id="slide3" className="carousel-item relative w-full">
-                <img
-                    src="/images/stock/photo-1414694762283-acccc27bca85.jpg"
-                    className="w-full"
-                />
-                <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                    <a href="#slide2" className="btn btn-circle">
-                        ❮
-                    </a>
-                    <a href="#slide4" className="btn btn-circle">
-                        ❯
-                    </a>
-                </div>
-            </div>
-            <div id="slide4" className="carousel-item relative w-full">
-                <img
-                    src="/images/stock/photo-1665553365602-b2fb8e5d1707.jpg"
-                    className="w-full"
-                />
-                <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                    <a href="#slide3" className="btn btn-circle">
-                        ❮
-                    </a>
-                    <a href="#slide1" className="btn btn-circle">
-                        ❯
-                    </a>
+            <div className="absolute bottom-4 right-0 left-0">
+                <div className="flex items-center justify-center gap-2">
+                    {images.map((s, i) => (
+                        <div
+                            key={i}
+                            className={`transition-all w-full bg-white rounded-full  ${
+                                curr === i ? "p-0.5" : "bg-opacity-50"
+                            }`}
+                        />
+                    ))}
                 </div>
             </div>
         </div>

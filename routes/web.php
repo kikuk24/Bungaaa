@@ -37,6 +37,11 @@ Route::post('/product', [ProductsController::class, 'store'])->name('product.sto
 
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[Admin::class,'index'])->name('dashboard');
+    Route::get('/homepage', [HomepagesController::class, 'create'])->name('homepage');
+    Route::post('/homepage', [HomepagesController::class, 'store'])->name('home.store');
+    Route::post('/homepage', [HomepagesController::class, 'upload'])->name('home.upload');
+    Route::get('/homepage/{id}/edit', [HomepagesController::class, 'edit'])->name('home.edit');
+    Route::post('/homepage/{id}/update', [HomepagesController::class, 'update'])->name('home.update');
     // Route::get('/page',[Admin::class,'page'])->name('page');
     Route::get('/category_products',[Admin::class, 'categories_products'])->name('category_products');
     Route::get('/product',[Admin::class,'product'])->name('product');

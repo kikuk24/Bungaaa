@@ -60,7 +60,7 @@ class ProductsController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'slug' => $slug,
-            'image'=> $request->image->move('post-image', $fileName),
+            'image' => $request->image->storeAs('images/products', $fileName),
 
         ]);
         return redirect()->route('product')->with('message','Product Berhasil ditambahkan');

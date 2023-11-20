@@ -2,9 +2,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm, usePage } from "@inertiajs/react";
 // import { Inertia } from '@inertiajs/inertia'
 export default function CreateCategory(props) {
-    const { data, setData, errors, post, progress,processing } = useForm({
+    const { data, setData, errors, post, progress, processing } = useForm({
         name: "",
-        
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -46,8 +45,7 @@ export default function CreateCategory(props) {
                                         {errors.name}
                                     </span>
                                 )}
-                                
-                                
+
                                 <button
                                     type="submit"
                                     disabled={processing}

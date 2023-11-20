@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category_products;
 use App\Models\homepages;
+use App\Models\images;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,10 +16,17 @@ class HomepagesController extends Controller
      */
     public function index()
     {
+
         $products = Products::all();
+        $category = category_products::all();
+        $homepage = homepages::all();
+        $images = images::all();
         return Inertia::render("Homepage",[
             'title'=>'Melayani jasa pembuatan mahar nikah',
-            'products' => $products
+            'products' => $products,
+            'category' => $category,
+            'homepage' => $homepage,
+            'images' => $images
         ]);
     }
 
@@ -26,7 +35,7 @@ class HomepagesController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("EditHomepage");
     }
 
     /**
@@ -34,12 +43,25 @@ class HomepagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        homepages::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+        return redirect()->route('product')->with('message', 'Berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
+    public function upload(Request $request)
+    {
+        $extFile = $request->file('image')->extension();
+        $name = time() . "." . $extFile;
+        images::create([
+            'image' => $request->image->storeAs('images/home', $name),
+        ]);
+        return redirect()->route('home')->with('message', 'Berhasil ditambahkan');
+    }
     public function show(homepages $homepages)
     {
         //
@@ -48,7 +70,7 @@ class HomepagesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(homepages $homepages)
+    public function edit(homepages $homepages, images $images)
     {
         //
     }

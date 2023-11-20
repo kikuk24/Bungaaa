@@ -12,6 +12,7 @@ class Admin extends Controller
     public function index() {
         // $products = Products::all();
         return Inertia::render('Dashboard',[
+            'title'=> 'Bunga-bunga Dashboard'
         ]);
         
     }
