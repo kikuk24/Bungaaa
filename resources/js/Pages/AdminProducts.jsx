@@ -44,10 +44,25 @@ export default function AdminProducts(props) {
                           {props.products.lenght != 0 &&
                               props.products.map((product) => (
                                   <div className="outline" key={product.id}>
-                                      <img src={product.image} alt="" />
+                                      <img
+                                          src={`storage/${product.image}`}
+                                          alt=""
+                                      />
                                       <p>{product.title}</p>
-                                      <Link href={`product/${product.id}/edit`} className="">Edit</Link>
-                                      <button className="btn btn-danger" onClick={()=>handleDelete(product.id)}>Delete</button>
+                                      <Link
+                                          href={`product/${product.id}/edit`}
+                                          className=""
+                                      >
+                                          Edit
+                                      </Link>
+                                      <button
+                                          className="btn btn-danger"
+                                          onClick={() =>
+                                              handleDelete(product.id)
+                                          }
+                                      >
+                                          Delete
+                                      </button>
                                   </div>
                               ))}
                       </div>
