@@ -52,7 +52,7 @@ class ProductsController extends Controller
             'image'=>'mimes:jpeg,png,jpg|max:2048|image'
         ]);
         $extFile = $request->image->getClientOriginalExtension();
-        $fileName = $request->slug.".".$extFile;
+        $fileName = $request->title . "." . $extFile;
         $slug = Str::slug($request->title, '-');
         Products::create([
             'category_product_id' =>$request->category,
