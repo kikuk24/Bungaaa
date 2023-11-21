@@ -78,7 +78,7 @@ class ProductsController extends Controller
         return Inertia::render("ShowProduct", [
             'product' => $product,
             'products' => $products->get(),
-            'categori' => $product->category,
+            // 'categori' => $product->category,
             'category' => $category
         ]);
     }

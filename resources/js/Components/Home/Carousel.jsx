@@ -7,7 +7,7 @@ import {
 const Carousel = ({
     children: images,
     autoSlide = false,
-    autoSlideInterval = 3000,
+    autoSlideInterval = 5000,
 }) => {
     const [curr, setCurr] = useState(0);
 
