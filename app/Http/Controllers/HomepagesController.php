@@ -17,13 +17,13 @@ class HomepagesController extends Controller
     public function index()
     {
 
-        $products = Products::all();
+        $products = Products::latest();
         $category = category_products::all();
         $homepage = homepages::all();
         $images = images::all();
         return Inertia::render("Homepage",[
             'title'=>'Melayani jasa pembuatan mahar nikah',
-            'products' => $products,
+            'products' => $products->get(),
             'category' => $category,
             'homepage' => $homepage,
             'images' => $images
@@ -60,7 +60,7 @@ class HomepagesController extends Controller
         images::create([
             'image' => $request->image->storeAs('images/home', $name),
         ]);
-        return redirect()->route('home')->with('message', 'Berhasil ditambahkan');
+        return redirect()->route('homepage')->with('message', 'Berhasil ditambahkan');
     }
     public function show(homepages $homepages)
     {

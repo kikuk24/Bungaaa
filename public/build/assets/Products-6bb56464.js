@@ -1,1 +1,0 @@
-import{j as o}from"./app-ba7a6cd1.js";import{N as s,F as t}from"./Navbar-42879530.js";import{C as a}from"./CardProduct-db6c5831.js";const d=r=>(console.log(r),o.jsxs("main",{className:"bg-white",children:[o.jsx(s,{}),o.jsx(a,{products:r.products,category:r.category}),o.jsx(t,{})]}));export{d as default};

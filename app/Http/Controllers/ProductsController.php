@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category_posts;
 use App\Models\category_products;
 use App\Models\Products;
 use Illuminate\Http\Request;
@@ -17,8 +18,8 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Products::leftJoin('category_products', 'category_products.id','=','category_product_id')
-        ->get(['products.id','products.title','products.price','products.image','products.slug',  'category_products.name as category', 'category_products.slug AS category_slug']);
-        // $products = Products::all();
+        ->get(['products.id', 'products.title', 'products.price', 'products.image', 'products.slug',  'category_products.name as category', 'category_products.slug AS category_slug']);
+        // $products = Products::latest();
         $category = category_products::all();
         return Inertia::render("Products", [
             'products' => $products,
@@ -69,9 +70,17 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(products $products)
+    public function show($slug)
     {
-        $products::where('id')->first();
+        $product = Products::where('slug', $slug)->first();
+        $products = Products::latest();
+        $category = category_posts::all();
+        return Inertia::render("ShowProduct", [
+            'product' => $product,
+            'products' => $products->get(),
+            'categori' => $product->category,
+            'category' => $category
+        ]);
     }
 
     /**

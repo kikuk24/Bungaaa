@@ -28,10 +28,10 @@ const isProduct = ({ products, category }) => {
                         key={product.id}
                         className="md:w-72 w-[10rem]  bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                     >
-                        <Link href={product.slug}>
+                        <Link href={`/products/${product.slug}`}>
                             <img
-                                src={`storage/${product.image}`}
-                                alt="Product"
+                                src={`/storage/${product.image}`}
+                                alt={product.title}
                                 className="md:h-60 h-32  w-52 md:w-72 object-cover rounded-t-xl"
                             />
                             <div className="px-4 py-3 md:w-72">
@@ -90,8 +90,7 @@ const nonProduct = () => {
     );
 };
 const CardProduct = ({ products, category }) => {
-    console.log(products, category);
-    return products.length === 0 && category.length === 0
+    return !products && category.length === 0
         ? nonProduct()
         : isProduct({ products, category });
 };

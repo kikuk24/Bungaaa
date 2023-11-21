@@ -16,6 +16,7 @@ export default function Homepage(props) {
                 {[
                     ...props.images.map((s) => (
                         <img
+                            key={s.id}
                             src={`storage/${s.image}`}
                             className="w-full h-[50%]"
                         />

@@ -10,10 +10,11 @@ use App\Models\category_products;
 class Products extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','description','price','slug', 'category_product_id','image'];
+    protected $fillable = ['title', 'description', 'price', 'slug', 'category_product_id', 'image'];
 
-    
-    public function category (){
-        return $this->belongsTo(category_products::class);
+
+    public function category()
+    {
+        return $this->belongsTo(category_products::class, 'id');
     }
 }

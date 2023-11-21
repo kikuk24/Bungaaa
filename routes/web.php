@@ -31,6 +31,7 @@ use Inertia\Inertia;
 // });
 Route::get('/', [HomepagesController::class, 'index']);
 Route::get('/products', [ProductsController::class, 'index']);
+Route::get('/products/{slug}', [ProductsController::class, 'show']);
 Route::get('/artikel', [PostController::class, 'index']);
 Route::get('/artikel/{slug}', [PostController::class, 'show']);
 Route::post('/product', [ProductsController::class, 'store'])->name('product.store');
