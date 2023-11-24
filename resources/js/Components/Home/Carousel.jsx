@@ -45,7 +45,7 @@ const Carousel = ({
                     <ArrowRightCircleIcon className="w-9 h-9" />
                 </button>
             </div>
-            <div className="absolute bottom-4 right-0 left-0">
+            <div className="absolute bottom-5 right-0 left-0">
                 <div className="flex items-center justify-center gap-2">
                     {images.map((s, i) => (
                         <div

@@ -6,10 +6,10 @@ import Navbar from "@/Components/Navbar"
 import { Head } from "@inertiajs/react";
 export default function Homepage(props) {
     return (
-        <main className="bg-white">
+        <main className="bg-page">
             <Head>
-                <title>{props.title}</title>
-                <meta name="description" content="Your page description" />
+                <title>{props.meta.title}</title>
+                <meta name="description" content={props.meta.description} />
             </Head>
             <Navbar />
             <Carousel autoSlide={true}>

@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react';
 import React from 'react'
 const isProduct = ({ products, category }) => {
     return (
-        <section className="py-4 md:px-[6rem] px-5">
+        <section className="py-4 md:px-[6rem] px-5 mt-[60px]">
             <div className="w-full">
                 <h1 className="md:text-2xl text-black font-bold">
                     Rekomendasi Produk Terbaru
@@ -13,7 +13,7 @@ const isProduct = ({ products, category }) => {
                             <li key={i} className="">
                                 <Link
                                     href={ca.slug}
-                                    className="border-2 p-2 rounded-full"
+                                    className="border-2 border-[#D988B9] p-2 rounded-full text-[#B0578D]"
                                 >
                                     {ca.name}
                                 </Link>

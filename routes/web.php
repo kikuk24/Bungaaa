@@ -38,12 +38,14 @@ Route::post('/product', [ProductsController::class, 'store'])->name('product.sto
 
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[Admin::class,'index'])->name('dashboard');
+    Route::get('/landing', [Admin::class, 'landingPage'])->name('landing.page');
     Route::get('/homepage', [HomepagesController::class, 'create'])->name('homepage');
-    Route::post('/homepage', [HomepagesController::class, 'store'])->name('home.store');
+    Route::post('/homepag', [HomepagesController::class, 'store'])->name('home.store');
     Route::post('/homepage', [HomepagesController::class, 'upload'])->name('home.upload');
+    Route::post('/image/{id}/edit', [HomepagesController::class, 'upload'])->name('image.edit');
+    Route::delete('/image/{id}', [HomepagesController::class, 'delete'])->name('image.edit');
     Route::get('/homepage/{id}/edit', [HomepagesController::class, 'edit'])->name('home.edit');
     Route::post('/homepage/{id}/update', [HomepagesController::class, 'update'])->name('home.update');
-    // Route::get('/page',[Admin::class,'page'])->name('page');
     Route::get('/category_products',[Admin::class, 'categories_products'])->name('category_products');
     Route::get('/product',[Admin::class,'product'])->name('product');
     Route::get('/product/create',[ProductsController::class,'create'])->name('product.create');
@@ -52,6 +54,8 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::get('/product/{id}/edit',[ProductsController::class,'edit'])->name('product.edit');
     Route::post('/product/{id}/update',[ProductsController::class,'update'])->name('product.update');
     Route::delete('/product/{id}',[ProductsController::class,'destroy'])->name('product.delete');
+    Route::get('/artikels/create', [PostController::class, 'create'])->name('artikel.create');
+    Route::post('/artikel', [PostController::class, 'store'])->name('artikel.store');
     
 });
 

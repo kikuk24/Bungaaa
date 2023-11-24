@@ -1,0 +1,1 @@
+import{j as s}from"./app-929eef79.js";import{N as o,F as a}from"./Navbar-f401081e.js";import{C as t}from"./CardBlog-8c80b720.js";const l=r=>(console.log(r),s.jsxs(s.Fragment,{children:[s.jsxs("main",{className:"bg-white",children:[s.jsx(o,{}),s.jsx(t,{})]}),s.jsx(a,{})]}));export{l as default};

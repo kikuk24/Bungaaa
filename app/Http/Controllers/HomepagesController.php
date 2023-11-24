@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\category_products;
+use Illuminate\Support\Facades\File;
 use App\Models\homepages;
 use App\Models\images;
 use App\Models\Products;
@@ -17,15 +18,17 @@ class HomepagesController extends Controller
     public function index()
     {
 
-        $products = Products::latest();
+        $products = Products::leftJoin('category_products', 'category_products.id', '=', 'category_product_id')
+        ->orderBy('id', 'desc')
+        ->limit('4')
+            ->get(['products.id', 'products.title', 'products.price', 'products.image', 'products.slug',  'category_products.name as category', 'category_products.slug AS category_slug']);
         $category = category_products::all();
-        $homepage = homepages::all();
+        $meta = homepages::where('id', 1)->first();
         $images = images::all();
         return Inertia::render("Homepage",[
-            'title'=>'Melayani jasa pembuatan mahar nikah',
-            'products' => $products->get(),
+            'meta' => $meta,
+            'products' => $products,
             'category' => $category,
-            'homepage' => $homepage,
             'images' => $images
         ]);
     }
@@ -47,7 +50,7 @@ class HomepagesController extends Controller
             'title' => $request->title,
             'description' => $request->description,
         ]);
-        return redirect()->route('product')->with('message', 'Berhasil ditambahkan');
+        return redirect()->route('landing.page')->with('message', 'Berhasil ditambahkan');
     }
 
     /**
@@ -70,17 +73,26 @@ class HomepagesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(homepages $homepages, images $images)
+    public function edit($id)
     {
-        //
+        $meta = homepages::findOrFail($id);
+        return Inertia::render("UpdateMeta", [
+            'meta' => $meta
+        ]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, homepages $homepages)
+    public function update(Request $request, $id)
     {
-        //
+        $homepages = homepages::findOrFail($id);
+        $homepages->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+        return redirect()->route('landing.page')->with('message', 'Product Berhasil diedit');
     }
 
     /**
@@ -89,5 +101,17 @@ class HomepagesController extends Controller
     public function destroy(homepages $homepages)
     {
         //
+    }
+    public function delete($id)
+    {
+        $images = images::findOrFail($id);
+        $imgPath = storage_path($images->image);
+        if (File::exists($imgPath)) {
+            File::delete($imgPath);
+            $images->delete();
+        } else {
+
+            $images->delete();
+        }
     }
 }

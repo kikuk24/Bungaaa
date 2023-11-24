@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -32,7 +34,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return Inertia::render("CreateArtikel");
     }
 
     /**
@@ -40,13 +42,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $title = $request->input('title');
-        $content = $request->input('content');
-        DB::table('posts')->insert([
-            'title'=> $title,
-            'content'=>$content,
-            'created_at'=> date('Y-m-d H:i:s'),
-            'updated_at'=> date('Y-m-d H:i:s')
+        $request->validate([
+            'title' => 'required',
+            'image' => 'mimes:png,jpg',
+            'content' => 'required',
+        ]);
+        $extFile = $request->image->getClientOriginalExtension();
+        $fileName = $request->title . "." . $extFile;
+        $slug = Str::slug($request->title, '-');
+
+        Posts::create([
+            'title' => $request->title,
+            'image' => $request->image->storeAs('images/products', $fileName),
+            'content' => $request->content,
+            'slug' => $slug
         ]);
 
         return redirect('post');

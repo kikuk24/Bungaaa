@@ -17,9 +17,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::leftJoin('category_products', 'category_products.id','=','category_product_id')
+        $products = Products::leftJoin('category_products', 'category_products.id', '=', 'category_product_id')
+        ->orderBy('id', 'desc')
         ->get(['products.id', 'products.title', 'products.price', 'products.image', 'products.slug',  'category_products.name as category', 'category_products.slug AS category_slug']);
-        // $products = Products::latest();
         $category = category_products::all();
         return Inertia::render("Products", [
             'products' => $products,
@@ -115,17 +115,15 @@ class ProductsController extends Controller
         $imgPath = public_path($products->image);
         if (File::exists($imgPath)) {
             File::delete($imgPath);
-            $products->update([
-                'id_category' => 1,
+            $products->update(['category_product_id' => $request->category,
                 'title' => $request->title,
                 'description' => $request->description,
                 'price' => $request->price,
                 'slug' => $request->slug,
                 'image' => $request->image->move('post-image', $fileName),
             ]);
-        }else{  
-            $products->update([
-                'id_category' => 1,
+        } else {
+            $products->update(['category_product_id' => $request->category,
                 'title' => $request->title,
                 'description' => $request->description,
                 'price' => $request->price,

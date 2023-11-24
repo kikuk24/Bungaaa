@@ -1,30 +1,30 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
-export default function CreateProducts(props) {
+import { useRef } from "react";
+import JoditEditor from "jodit-react";
+export default function CreateArtikel(props) {
+    const editor = useRef(null);
     const { data, setData, errors, post, progress } = useForm({
         title: "",
-        description: "",
-        price: "",
-        category: "",
-        slug: "",
+        content: "",
         image: null,
     });
+    console.log(data);
     const handleSubmit = async (e) => {
         e.preventDefault();
         post(route("product.store"));
 
         setData("title", "");
-        setData("description", "");
-        setData("price", "");
-        setData("category", "");
+        setData("content", "");
         setData("image", null);
     };
+
     return (
         <AuthenticatedLayout
             user={props.auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Tambah Produk
+                    Posting Artikel Terbaru
                 </h2>
             }
         >
@@ -53,36 +53,6 @@ export default function CreateProducts(props) {
                                         {errors.title}
                                     </span>
                                 )}
-                                <label htmlFor="description">Deskripsi</label>
-                                <input
-                                    type="text"
-                                    value={data.description}
-                                    label="description"
-                                    name="description"
-                                    onChange={(e) =>
-                                        setData("description", e.target.value)
-                                    }
-                                />
-                                {errors.description && (
-                                    <span className="text-red-600 my-1">
-                                        {errors.description}
-                                    </span>
-                                )}
-                                <label htmlFor="price">Harga</label>
-                                <input
-                                    type="number"
-                                    name="price"
-                                    label="price"
-                                    value={data.price}
-                                    onChange={(e) =>
-                                        setData("price", e.target.value)
-                                    }
-                                />
-                                {errors.price && (
-                                    <span className="text-red-600 my-1">
-                                        {errors.price}
-                                    </span>
-                                )}
                                 <label htmlFor="image">Gambar</label>
                                 <input
                                     type="file"
@@ -108,23 +78,19 @@ export default function CreateProducts(props) {
                                         </div>
                                     </div>
                                 )}
-                                <label htmlFor="category">Kategori</label>
-                                <select
-                                    name="category"
-                                    id="category"
-                                    onChange={(e) =>
-                                        setData("category", e.target.value)
-                                    }
-                                >
-                                    <option value="0">
-                                        --Pilih Kategori--
-                                    </option>
-                                    {props.category.map((categori, index) => (
-                                        <option key={index} value={categori.id}>
-                                            {categori.name}
-                                        </option>
-                                    ))}
-                                </select>
+                                <label htmlFor="content">Content</label>
+                                <JoditEditor
+                                    ref={editor}
+                                    value={data.content}
+                                    onChange={(newContent) => {
+                                        setData("content", newContent);
+                                    }}
+                                />
+                                {errors.description && (
+                                    <span className="text-red-600 my-1">
+                                        {errors.description}
+                                    </span>
+                                )}
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
