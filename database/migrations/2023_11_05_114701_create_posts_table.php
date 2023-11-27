@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title',100);
-            $table->text('content');
+            $table->text('content')->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
+            $table->text('description');
             $table->foreignId('category_post_id');
             $table->string('image');
-            $table->integer('id_category');
             $table->integer('view')->default(0);
             $table->string('slug')->unique();
             $table->timestamps();

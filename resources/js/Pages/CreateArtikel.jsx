@@ -7,14 +7,15 @@ export default function CreateArtikel(props) {
     const { data, setData, errors, post, progress } = useForm({
         title: "",
         content: "",
+        description: "",
         image: null,
     });
-    console.log(data);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        post(route("product.store"));
+        post(route("artikel.store"));
 
         setData("title", "");
+        setData("description", "");
         setData("content", "");
         setData("image", null);
     };
@@ -80,11 +81,30 @@ export default function CreateArtikel(props) {
                                 )}
                                 <label htmlFor="content">Content</label>
                                 <JoditEditor
+                                    className="w-full h-96"
                                     ref={editor}
+                                    name="content"
+                                    tabIndex={1}
                                     value={data.content}
                                     onChange={(newContent) => {
                                         setData("content", newContent);
                                     }}
+                                />
+
+                                {errors.content && (
+                                    <span className="text-red-600 my-1">
+                                        {errors.content}
+                                    </span>
+                                )}
+                                <label htmlFor="description">Description</label>
+                                <input
+                                    type="text"
+                                    label="Description"
+                                    name="description"
+                                    value={data.description}
+                                    onChange={(e) =>
+                                        setData("description", e.target.value)
+                                    }
                                 />
                                 {errors.description && (
                                     <span className="text-red-600 my-1">

@@ -6,6 +6,7 @@ use App\Models\category_products;
 use Illuminate\Support\Facades\File;
 use App\Models\homepages;
 use App\Models\images;
+use App\Models\Posts;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,14 +21,16 @@ class HomepagesController extends Controller
 
         $products = Products::leftJoin('category_products', 'category_products.id', '=', 'category_product_id')
         ->orderBy('id', 'desc')
-        ->limit('4')
+            ->limit('16')
             ->get(['products.id', 'products.title', 'products.price', 'products.image', 'products.slug',  'category_products.name as category', 'category_products.slug AS category_slug']);
         $category = category_products::all();
+        $artikel = Posts::latest()->limit('3')->get();
         $meta = homepages::where('id', 1)->first();
         $images = images::all();
         return Inertia::render("Homepage",[
             'meta' => $meta,
             'products' => $products,
+            'artikel' => $artikel,
             'category' => $category,
             'images' => $images
         ]);

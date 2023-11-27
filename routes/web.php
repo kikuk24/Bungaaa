@@ -6,6 +6,7 @@ use App\Http\Controllers\HomepagesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Posts;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,7 +36,17 @@ Route::get('/products/{slug}', [ProductsController::class, 'show']);
 Route::get('/artikel', [PostController::class, 'index']);
 Route::get('/artikel/{slug}', [PostController::class, 'show']);
 Route::post('/product', [ProductsController::class, 'store'])->name('product.store');
+Route::get('/sitemap', function () {
+    $sitemap = Sitemap::create()
+        ->add(Url::create('/products'))
+        ->add(Url::create('/artikel'));
 
+    $post = Posts::all();
+    foreach ($post as $post) {
+        $sitemap->add(Url::create("/artikel/{$post->slug}"));
+    }
+    $sitemap->writeToFile(public_path('sitemap.xml'));
+}); 
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[Admin::class,'index'])->name('dashboard');
     Route::get('/landing', [Admin::class, 'landingPage'])->name('landing.page');
@@ -55,7 +66,11 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::post('/product/{id}/update',[ProductsController::class,'update'])->name('product.update');
     Route::delete('/product/{id}',[ProductsController::class,'destroy'])->name('product.delete');
     Route::get('/artikels/create', [PostController::class, 'create'])->name('artikel.create');
+    Route::get('/artikels/{id}/edit', [PostController::class, 'edit'])->name('artikel.edit');
+    Route::get('/artikels', [Admin::class, 'artikel'])->name('artikel.admin');
     Route::post('/artikel', [PostController::class, 'store'])->name('artikel.store');
+    Route::post('/artikels/{id}/update', [PostController::class, 'update'])->name('artikel.update');
+    Route::delete('/artikels/{id}', [PostController::class, 'destroy'])->name('artikel.delete');
     
 });
 

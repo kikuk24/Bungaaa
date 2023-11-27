@@ -3,7 +3,6 @@ import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/react";
 
 export default function AdminPages(props) {
-    console.log(props);
     const handleDelete = async (id) => {
         Inertia.delete(`image/${id}`);
     };

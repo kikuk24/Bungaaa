@@ -5,13 +5,12 @@ import Topbar from '@/Components/Topbar'
 import React from 'react'
 
 const Products = (props) => {
-  console.log(props)
   return (
       <main className="bg-page">
           {/* <Topbar category={props.category} /> */}
           <Navbar />
           <CardProduct products={props.products} category={props.category} />
-          <Footer />
+          <Footer category={props.category} />
       </main>
   );
 }

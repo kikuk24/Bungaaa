@@ -1,24 +1,26 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, useForm} from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 export default function EditProduct(props) {
-  const { data, setData, errors, post, progress,processing } = useForm({
-      title: props.products.title,
-      description: props.products.description,
-      price: props.products.price,
-      slug: props.products.slug,
-      image: props.products.image,
-  });
-  const handleUpdate = async(e) => {
-      e.preventDefault()
-      post(route('product.update',props.products.id));
+    const { data, setData, errors, post, progress, processing } = useForm({
+        title: props.products.title,
+        description: props.products.description,
+        price: props.products.price,
+        slug: props.products.slug,
+        category: props.category.id,
+        image: props.products.image,
+    });
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        post(route("product.update", props.products.id));
 
-      setData("title",props.products.title)
-      setData("description", props.products.description)
-      setData("price", props.products.price)
-      setData("slug",props.products.slug)
-      setData("image", props.products.image);
-    }
-    
+        setData("title", props.products.title);
+        setData("description", props.products.description);
+        setData("price", props.products.price);
+        setData("slug", props.products.slug);
+        setData("image", props.products.image);
+        setData("category", props.category.id);
+    };
+
     return (
         <AuthenticatedLayout
             user={props.auth.user}
@@ -84,12 +86,6 @@ export default function EditProduct(props) {
                                     </span>
                                 )}
                                 <label htmlFor="image">Gambar</label>
-                                {/* {props.products.image !== null && (
-                                    <img
-                                        src={`http://127.0.0.1:8000/${props.products.image}`}
-                                        alt=""
-                                    />
-                                )} */}
                                 <input
                                     type="file"
                                     label="image"
@@ -114,25 +110,35 @@ export default function EditProduct(props) {
                                         </div>
                                     </div>
                                 )}
-                                <label htmlFor="slug">Slug</label>
-                                <input
-                                    type="text"
-                                    name="slug"
-                                    label="slug"
-                                    value={data.slug}
+                                <label htmlFor="category">Kategori</label>
+                                <select
+                                    name="category"
+                                    id="category"
                                     onChange={(e) =>
-                                        setData("slug", e.target.value)
+                                        setData("category", e.target.value)
                                     }
-                                />
-                                {errors.slug && (
-                                    <span className="text-red-600 my-1">
-                                        {errors.slug}
-                                    </span>
-                                )}
+                                >
+                                    <option value="0">
+                                        --Pilih Kategori--
+                                    </option>
+                                    {props.category.lenght !== 0 &&
+                                        props.category.map(
+                                            (categori, index) => (
+                                                <option
+                                                    defaultChecked={
+                                                        data.category
+                                                    }
+                                                    key={index}
+                                                    value={categori.id}
+                                                >
+                                                    {categori.name}
+                                                </option>
+                                            )
+                                        )}
+                                </select>
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
-                                    disabled={processing}
                                 >
                                     Add
                                 </button>

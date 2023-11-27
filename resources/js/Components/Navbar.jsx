@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Navlinks } from "@/data";
 import { Link } from "@inertiajs/react";
-const Navbar = () => {
+const Navbar = ({ auth }) => {
     const [open, setOpen] = useState(false);
     return (
         <nav
@@ -38,6 +38,16 @@ const Navbar = () => {
                             </Link>
                         </li>
                     ))}
+                    {auth.user !== null && (
+                        <li>
+                            <Link
+                                href="/dashboard"
+                                className="hover:text-gary  md:hover:[#D988B9] duration-500 md:hover:bg-custom-red hover:rounded md:px-3 md:py-2"
+                            >
+                                Dashboard
+                            </Link>
+                        </li>
+                    )}
                 </ul>
             </div>
         </nav>

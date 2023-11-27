@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\category_products;
 use App\Models\homepages;
 use App\Models\images;
+use App\Models\Posts;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -46,5 +47,13 @@ class Admin extends Controller
 
         ]);
     }
-    
+    public function artikel()
+    {
+
+        $artikel = Posts::all();
+
+        return Inertia::render('AdminArtikel', [
+            'artikel' => $artikel
+        ]);
+    }
 }

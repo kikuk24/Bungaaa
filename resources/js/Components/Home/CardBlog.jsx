@@ -1,45 +1,41 @@
 import { Blogs } from '@/data';
-import React from 'react'
-import BlogSection from './BlogSection';
-const isBlog = ({ artikel }) => {
+import { Link } from "@inertiajs/react";
+
+import React from "react";
+import BlogSection from "./BlogSection";
+const isBlog = (artikel) => {
     return (
         <HeadBlog>
-            <div className="py-8">
-                <h1 className="md:text-2xl text-black font-bold">
-                    Jangan Lewatkan Bungabunga Blog
-                </h1>
-            </div>
-            <BlogSection />
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-                {Blogs.map((blog) => (
+                {artikel.map((blog) => (
                     <div
-                        className="rounded overflow-hidden shadow-lg flex flex-col"
+                        className="rounded bg-white overflow-hidden shadow-lg flex flex-col"
                         key={blog.id}
                     >
-                        <a href="#">
+                        <a href="">
                             <div className="relative">
                                 <img
-                                    className="w-full"
-                                    src="https://images.pexels.com/photos/61180/pexels-photo-61180.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                    alt="Sunset in the mountains"
+                                    className="w-full object-cover h-48"
+                                    src={`/storage/${blog.image}`}
+                                    alt={blog.title}
                                 />
                                 <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
                                 <a href="#!">
                                     <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                                        Category
+                                        Mahar Nikah
                                     </div>
                                 </a>
                             </div>
                         </a>
                         <div className="px-6 py-4 mb-auto">
-                            <a
-                                href="#"
+                            <Link
+                                href={`/artikel/${blog.slug}`}
                                 className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out mb-2"
                             >
                                 {blog.title}
-                            </a>
+                            </Link>
                             <p className="text-gray-500 text-sm line-clamp-3">
-                                {blog.content}
+                                {blog.description}
                             </p>
                         </div>
                         <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
@@ -75,21 +71,25 @@ const isBlog = ({ artikel }) => {
             </div>
         </HeadBlog>
     );
-}
+};
 const HeadBlog = (props) => {
-    const {children} = props
+    const { children } = props;
     return (
-        <section className='px-4 md:px-[8rem] py-7'>
+        <section className="mt-[60px] px-4 md:px-[8rem] py-7">
             {children}
         </section>
-    )
-}
+    );
+};
 const noArtikel = () => {
-    return(<div className="min-h-screen flex items-center justify-center font-bold text-black">Tidak Ada data Artikel</div>)
-}
+    return (
+        <div className="min-h-screen flex items-center justify-center font-bold text-black">
+            Tidak Ada data Artikel
+        </div>
+    );
+};
 const CardBlog = ({ artikel }) => {
-    console.log('artikel:', artikel)
-    return !artikel ? noArtikel() : isBlog(artikel)
-}
+    console.log("artikel:", artikel);
+    return artikel.length === 0 ? noArtikel() : isBlog(artikel);
+};
 
 export default CardBlog

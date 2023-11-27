@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category_products;
+use App\Models\Products;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -16,16 +18,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts=DB::table('posts')
-        ->select('id','title','content')
-        ->orderBy('id','desc')
-        ->get();
-
-        $data = [
-            'posts' => $posts
-        ];
+        $posts = Posts::latest();
+        $category = category_products::all();
         return Inertia::render("Artikel", [
-            'artikel'=> $posts
+            'title' => 'Bungabunga Artikel',
+            'artikel' => $posts->get(),
+            'category' => $category
         ]);
     }
 
@@ -46,20 +44,22 @@ class PostController extends Controller
             'title' => 'required',
             'image' => 'mimes:png,jpg',
             'content' => 'required',
+            'description' => 'required'
         ]);
         $extFile = $request->image->getClientOriginalExtension();
         $fileName = $request->title . "." . $extFile;
         $slug = Str::slug($request->title, '-');
 
         Posts::create([
+            'category_post_id' => 1,
             'title' => $request->title,
-            'image' => $request->image->storeAs('images/products', $fileName),
+            'image' => $request->image->storeAs('images/posts', $fileName),
+            'description' => $request->description,
             'content' => $request->content,
             'slug' => $slug
         ]);
 
-        return redirect('post');
-        
+        return redirect()->route('product')->with('message', 'Artikel Berhasil ditambahkan');
 
 
     }
@@ -67,34 +67,30 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($slug)
     {
-        $posts = DB::table('posts')
-        ->select('*')
-        ->where('id','=', $id)
-        ->first();
-
-        $data = [
-            'post'=> $posts
-        ];
-        return view('posts.show',$data);
+        $posts = Posts::where('slug', $slug)->first();
+        $products = Products::latest()->limit('4')->with('category')->get();
+        $category = category_products::all();
+        $artikel = Posts::latest()->limit('3')->get();
+        return Inertia::render("ShowArtikel", [
+            'artikel' => $posts,
+            'products' => $products,
+            'category' => $category,
+            'recommended' => $artikel,
+            'created_at' => date('Y-m-d')
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $posts = DB::table('posts')
-        ->select('*')
-            ->where('id', '=', $id)
-            ->first();
-
-        $data = [
-            'post' => $posts
-        ];
-        return view('posts.edit',$data);
-
+        $post = Posts::findOrFail($id);
+        return Inertia::render("EditArtikel", [
+            'artikel' => $post
+        ]);
     }
 
     /**

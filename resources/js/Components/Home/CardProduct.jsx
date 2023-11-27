@@ -22,7 +22,7 @@ const isProduct = ({ products, category }) => {
                     </ul>
                 </div>
             </div>
-            <div className="w-fit mx-auto grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-5 mt-10 mb-5">
+            <div className="w-fit mx-auto grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-7 mt-10 mb-5">
                 {products.map((product) => (
                     <div
                         key={product.id}
@@ -32,13 +32,13 @@ const isProduct = ({ products, category }) => {
                             <img
                                 src={`/storage/${product.image}`}
                                 alt={product.title}
-                                className="md:h-60 h-32  w-52 md:w-72 object-cover rounded-t-xl"
+                                className="md:h-60 h-32  w-60 md:w-72 object-cover rounded-t-xl"
                             />
                             <div className="px-4 py-3 md:w-72">
                                 <span className="text-gray-400 mr-3 uppercase text-xs">
                                     {product.category}
                                 </span>
-                                <p className="md:text-lg font-bold text-black truncate block capitalize">
+                                <p className="md:text-lg font-bold text-black block capitalize truncate">
                                     {product.title}
                                 </p>
                                 <div className="flex items-center">
@@ -46,7 +46,11 @@ const isProduct = ({ products, category }) => {
                                         Rp{" "}
                                         {product.price.toLocaleString(
                                             "id",
-                                            "ID"
+                                            "ID",
+                                            {
+                                                style: "currency",
+                                                currency: "IDR",
+                                            }
                                         )}
                                     </p>
                                     {/* <del>
@@ -90,7 +94,7 @@ const nonProduct = () => {
     );
 };
 const CardProduct = ({ products, category }) => {
-    return !products && category.length === 0
+    return products.length === 0 || category.length === 0
         ? nonProduct()
         : isProduct({ products, category });
 };

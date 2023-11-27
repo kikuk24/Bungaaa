@@ -5,6 +5,7 @@ import ShowProd from "@/Components/ShowProd";
 import { Head } from "@inertiajs/react";
 
 export default function ShowProduct(props) {
+    console.log(props);
     return (
         <main className="bg-white">
             <Head>
@@ -14,7 +15,7 @@ export default function ShowProduct(props) {
             <Navbar />
             <ShowProd product={props.product} products={props.products} />
             <CardProduct products={props.products} category={props.category} />
-            <Footer />
+            <Footer category={props.category} />
         </main>
     );
 }

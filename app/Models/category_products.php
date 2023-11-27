@@ -13,7 +13,10 @@ class category_products extends Model
         "id", "name","slug"
     ];
 
-    public function products(){
-        return $this->hasMany(Products::class, 'category_product_id');
+
+    public function products()
+    {
+        return $this->hasMany(Products::class, 'category_product_id', 'id');
     }
+    
 }

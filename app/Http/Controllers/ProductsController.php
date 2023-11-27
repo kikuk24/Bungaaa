@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\category_posts;
 use App\Models\category_products;
 use App\Models\Products;
 use Illuminate\Http\Request;
@@ -53,7 +52,7 @@ class ProductsController extends Controller
             'image'=>'mimes:jpeg,png,jpg|max:2048|image'
         ]);
         $extFile = $request->image->getClientOriginalExtension();
-        $fileName = $request->title . "." . $extFile;
+        $fileName = $request->slug . "." . $extFile;
         $slug = Str::slug($request->title, '-');
         Products::create([
             'category_product_id' =>$request->category,
@@ -74,11 +73,10 @@ class ProductsController extends Controller
     {
         $product = Products::where('slug', $slug)->first();
         $products = Products::latest();
-        $category = category_posts::all();
+        $category = category_products::all();
         return Inertia::render("ShowProduct", [
-            'product' => $product,
+            'product' => $product->with('category')->first(),
             'products' => $products->get(),
-            // 'categori' => $product->category,
             'category' => $category
         ]);
     }
@@ -89,8 +87,11 @@ class ProductsController extends Controller
     public function edit($id)
     {
         $products = Products::findOrFail($id);
+        $category = category_products::all();
+
         return Inertia::render("EditProduct", [
             'products' => $products,
+            'category' => $category
         ]);
     }
 
@@ -109,10 +110,9 @@ class ProductsController extends Controller
         //     'image'=>'mimes:jpeg,png,jpg|max:2048|image'
         // ]);
         $extFile = $request->image->getClientOriginalExtension();
-        // dd($extFile);
         $fileName = $request->slug . "." . $extFile;
 
-        $imgPath = public_path($products->image);
+        $imgPath = storage_path('app/public/' . $products->image);
         if (File::exists($imgPath)) {
             File::delete($imgPath);
             $products->update(['category_product_id' => $request->category,
@@ -120,15 +120,17 @@ class ProductsController extends Controller
                 'description' => $request->description,
                 'price' => $request->price,
                 'slug' => $request->slug,
-                'image' => $request->image->move('post-image', $fileName),
+                'image' => $request->image->storeAs('images/products', $fileName),
             ]);
         } else {
-            $products->update(['category_product_id' => $request->category,
+            $products->update(
+                [
+                    'category_product_id' => $request->category,
                 'title' => $request->title,
                 'description' => $request->description,
                 'price' => $request->price,
                 'slug' => $request->slug,
-                // 'image' => $request->image->move('post-image', $fileName)
+                // 'image' => $request->image->storeAs('images/products', $fileName),
             ]);
         }
         return redirect()->route('product')->with('message', 'Product Berhasil diedit');
@@ -140,7 +142,7 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         $products = Products::findOrFail($id);
-        $imgPath = public_path($products->image);
+        $imgPath = storage_path('app/public/' . $products->image);
         if(File::exists($imgPath)){
             File::delete($imgPath);
             $products->delete();
