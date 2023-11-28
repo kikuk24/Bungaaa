@@ -27,13 +27,17 @@ export default function Homepage(props) {
                 ]}
             </Carousel>
             <CardProduct products={props.products} category={props.category} />
-            <div className="px-7">
-                <h1 className="md:text-2xl text-black font-bold">
-                    Jangan Lewatkan Bungabunga Blog
-                </h1>
-            </div>
-            <BlogSection />
-            <CardBlog artikel={props.artikel} />
+            {props.artikel.lenght !== 0 && (
+                <>
+                    <div className="px-7">
+                        <h1 className="md:text-2xl text-black font-bold">
+                            Jangan Lewatkan Bungabunga Blog
+                        </h1>
+                    </div>
+                    <BlogSection />
+                    <CardBlog artikel={props.artikel} />
+                </>
+            )}
             <Footer category={props.category} />
         </main>
     );

@@ -22,7 +22,7 @@ const isProduct = ({ products, category }) => {
                     </ul>
                 </div>
             </div>
-            <div className="w-fit mx-auto grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-7 mt-10 mb-5">
+            <div className="w-fit grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-7 mt-10 mb-5">
                 {products.map((product) => (
                     <div
                         key={product.id}

@@ -5,7 +5,6 @@ import ShowProd from "@/Components/ShowProd";
 import { Head } from "@inertiajs/react";
 
 export default function ShowProduct(props) {
-    console.log(props);
     return (
         <main className="bg-white">
             <Head>
