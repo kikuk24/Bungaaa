@@ -17,7 +17,7 @@ export default function ShowArtikel(props) {
                 <title>{props.artikel.title}</title>
                 <meta name="description" content={props.artikel.description} />
             </Head>
-            <Navbar />
+            <Navbar auth={props.auth} />
             <main className="md:px-[100px] py-8 md:gap-4 bg-white mt-[60px] grid md:grid-cols-2 grid-cols-1">
                 <article className="px-[20px]">
                     <h1 className="text-3xl font-extrabold text-black">

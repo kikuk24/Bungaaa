@@ -12,7 +12,7 @@ export default function ShowProduct(props) {
                 <title>{props.product.title}</title>
                 <meta name="description" content={props.product.description} />
             </Head>
-            <Navbar />
+            <Navbar auth={props.auth} />
             <ShowProd product={props.product} products={props.products} />
             <CardProduct products={props.products} category={props.category} />
             <Footer category={props.category} />
