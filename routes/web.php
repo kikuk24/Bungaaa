@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Posts;
+use App\Models\Products;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Spatie\Sitemap\Sitemap;
@@ -45,6 +46,10 @@ Route::get('/sitemap', function () {
     $post = Posts::all();
     foreach ($post as $post) {
         $sitemap->add(Url::create("/artikel/{$post->slug}"));
+    }
+    $products = Products::all();
+    foreach ($products as $post) {
+        $sitemap->add(Url::create("/products/{$post->slug}"));
     }
     $sitemap->writeToFile(public_path('sitemap.xml'));
 }); 
