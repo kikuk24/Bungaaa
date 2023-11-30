@@ -10,7 +10,8 @@ use App\Models\category_products;
 class Products extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'price', 'slug', 'category_product_id', 'image'];
+    protected $fillable = ['title', 'description', 'price', 'slug', 'category_product_id', 'image', 'image_1', 'image_2', 'image_3'];
+    // protected $guarded = ['id'];
 
 
 

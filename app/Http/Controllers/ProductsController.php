@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\category_products;
+use App\Models\product_image;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -52,8 +53,14 @@ class ProductsController extends Controller
             'image'=>'mimes:jpeg,png,jpg|max:2048|image'
         ]);
         $extFile = $request->image->getClientOriginalExtension();
-        $fileName = $request->slug . "." . $extFile;
+        $extFile1 = $request->image_1->getClientOriginalExtension();
+        $extFile2 = $request->image_2->getClientOriginalExtension();
+        $extFile3 = $request->image_3->getClientOriginalExtension();
         $slug = Str::slug($request->title, '-');
+        $fileName = $slug . "." . $extFile;
+        $fileName1 = $slug . "-1." . $extFile1;
+        $fileName2 = $slug . "-2." . $extFile2;
+        $fileName3 = $slug . "-3." . $extFile3;
         Products::create([
             'category_product_id' =>$request->category,
             'title' => $request->title,
@@ -61,8 +68,12 @@ class ProductsController extends Controller
             'price' => $request->price,
             'slug' => $slug,
             'image' => $request->image->storeAs('images/products', $fileName),
+            'image_1' => $request->image_1->storeAs('images/products', $fileName1),
+            'image_2' => $request->image_2->storeAs('images/products', $fileName2),
+            'image_3' => $request->image_3->storeAs('images/products', $fileName3),
 
         ]);
+        
         return redirect()->route('product')->with('message','Product Berhasil ditambahkan');
     }
 
@@ -143,9 +154,15 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         $products = Products::findOrFail($id);
-        $imgPath = storage_path('app/public/' . $products->image);
-        if(File::exists($imgPath)){
-            File::delete($imgPath);
+        $cover = storage_path('app/public/' . $products->image);
+        $cover1 = storage_path('app/public/' . $products->image_1);
+        $cover2 = storage_path('app/public/' . $products->image_2);
+        $cover3 = storage_path('app/public/' . $products->image_3);
+        if (File::exists($cover)) {
+            File::delete($cover1);
+            File::delete($cover2);
+            File::delete($cover3);
+            File::delete($cover);
             $products->delete();
         }else{
 

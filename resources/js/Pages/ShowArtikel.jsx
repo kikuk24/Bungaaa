@@ -4,13 +4,17 @@ import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import SideProducts from "@/Components/Article/SideProducts";
 import SideArtikel from "@/Components/Article/SideArtikel";
-
+import TimeAgo from "react-timeago";
+import frenchStrings from "react-timeago/lib/language-strings/fr";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 export default function ShowArtikel(props) {
     console.log(props);
     const [html, setHtml] = useState("");
     useEffect(() => {
         setHtml(props.artikel.content);
     }, [html]);
+    const formatter = buildFormatter(frenchStrings);
+
     return (
         <>
             <Head>
@@ -23,9 +27,12 @@ export default function ShowArtikel(props) {
                     <h1 className="text-3xl font-extrabold text-black">
                         {props.artikel.title}
                     </h1>
-                    <p className="my-3">
-                        Penulis : Bungabunga, Dibuat Pada{" "}
-                        {props.artikel.created_at}
+                    <p className="my-3 text-slate">
+                        Creator : Bungabunga, created at{" "}
+                        <TimeAgo
+                            date={props.artikel.created_at}
+                            minPeriod={60}
+                        />
                     </p>
 
                     <figure>

@@ -12,7 +12,7 @@ const isProduct = ({ products, category }) => {
                         {category.map((ca, i) => (
                             <li key={i} className="">
                                 <Link
-                                    href={ca.slug}
+                                    href={`/category/${ca.slug}`}
                                     className="border-2 border-[#D988B9] p-2 rounded-full text-[#B0578D]"
                                 >
                                     {ca.name}

@@ -40,7 +40,7 @@ export default function AdminProducts(props) {
                               <span>{props.flash.message}</span>
                           </div>
                       )}
-                      <div className="p-6 text-gray-900 grid grid-cols-4 gap-3 w-full">
+                      <div className="p-6 text-gray-900 grid md:grid-cols-4 gap-3 w-full grid-cols-2">
                           {props.products.lenght != 0 &&
                               props.products.map((product) => (
                                   <div className="outline" key={product.id}>

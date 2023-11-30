@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\category_products;
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -41,15 +42,25 @@ class CategoryProductsController extends Controller
             'slug' => $slug
 
         ]);
-        return redirect()->route('product')->with('message', 'category Berhasil ditambahkan');
+        return redirect()->route('category_products')->with('message', 'category Berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(category_products $category_products)
+    public function show($slug)
     {
-        //
+        $singleCategory = category_products::where('slug', $slug)->with('products')->first();
+        $products = Products::all();
+        $p = Products::with('category')->get();
+        $category = category_products::all();
+        return Inertia::render("Products", [
+            'title' => $singleCategory->name,
+            'singleCategory' => $singleCategory,
+            'products' => $products,
+            'category' => $category,
+            'p' => $p
+        ]);
     }
 
     /**

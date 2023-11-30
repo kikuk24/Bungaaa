@@ -8,6 +8,9 @@ export default function CreateProducts(props) {
         category: "",
         slug: "",
         image: null,
+        image_1: null,
+        image_2: null,
+        image_3: null,
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,6 +21,9 @@ export default function CreateProducts(props) {
         setData("price", "");
         setData("category", "");
         setData("image", null);
+        setData("image_1", null);
+        setData("image_2", null);
+        setData("image_3", null);
     };
     return (
         <AuthenticatedLayout
@@ -83,7 +89,7 @@ export default function CreateProducts(props) {
                                         {errors.price}
                                     </span>
                                 )}
-                                <label htmlFor="image">Gambar</label>
+                                <label htmlFor="image">Cover</label>
                                 <input
                                     type="file"
                                     label="image"
@@ -108,6 +114,36 @@ export default function CreateProducts(props) {
                                         </div>
                                     </div>
                                 )}
+                                <label htmlFor="image">Gambar</label>
+                                <input
+                                    type="file"
+                                    label="image"
+                                    name="image"
+                                    className="file-input file-input-ghost w-full"
+                                    onChange={(e) =>
+                                        setData("image_1", e.target.files[0])
+                                    }
+                                />
+                                <label htmlFor="image">Gambar</label>
+                                <input
+                                    type="file"
+                                    label="image"
+                                    name="image"
+                                    className="file-input file-input-ghost w-full"
+                                    onChange={(e) =>
+                                        setData("image_2", e.target.files[0])
+                                    }
+                                />
+                                <label htmlFor="image">Gambar</label>
+                                <input
+                                    type="file"
+                                    label="image"
+                                    name="image"
+                                    className="file-input file-input-ghost w-full"
+                                    onChange={(e) =>
+                                        setData("image_3", e.target.files[0])
+                                    }
+                                />
                                 <label htmlFor="category">Kategori</label>
                                 <select
                                     name="category"
