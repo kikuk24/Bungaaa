@@ -1,11 +1,11 @@
-import { Link } from '@inertiajs/react';
-import React from 'react'
+import { Link } from "@inertiajs/react";
+import React from "react";
 const isProduct = ({ products, category }) => {
     return (
         <section className="py-4 md:px-[6rem] px-5 mt-[60px]">
             <div className="w-full">
                 <h1 className="md:text-2xl text-black font-bold">
-                    Rekomendasi Produk Terbaru
+                    Category : {products.name}
                 </h1>
                 <div className="mt-3 ">
                     <ul className="flex flex-row flex-warp gap-2">
@@ -23,7 +23,7 @@ const isProduct = ({ products, category }) => {
                 </div>
             </div>
             <div className="w-fit grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-7 mt-10 mb-5">
-                {products.map((product) => (
+                {products.products.map((product) => (
                     <div
                         key={product.id}
                         className="md:w-72 w-[10rem]  bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
@@ -36,7 +36,7 @@ const isProduct = ({ products, category }) => {
                             />
                             <div className="px-4 py-3 md:w-72">
                                 <span className="text-gray-400 mr-3 uppercase text-xs">
-                                    {product.category.name}
+                                    {products.name}
                                 </span>
                                 <p className="md:text-lg font-bold text-black block capitalize truncate">
                                     {product.title}
@@ -93,9 +93,9 @@ const nonProduct = () => {
         </div>
     );
 };
-const CardProduct = ({ products, category }) => {
+const CardProductsCategory = ({ products, category }) => {
     return products.length === 0 || category.length === 0
         ? nonProduct()
         : isProduct({ products, category });
 };
-export default CardProduct
+export default CardProductsCategory;

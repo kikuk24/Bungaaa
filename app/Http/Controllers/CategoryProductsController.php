@@ -51,15 +51,13 @@ class CategoryProductsController extends Controller
     public function show($slug)
     {
         $singleCategory = category_products::where('slug', $slug)->with('products')->first();
-        $products = Products::all();
+        $products = category_products::where('slug', $slug)->with('products')->first();
         $p = Products::with('category')->get();
         $category = category_products::all();
-        return Inertia::render("Products", [
+        return Inertia::render("PerCategory", [
             'title' => $singleCategory->name,
-            'singleCategory' => $singleCategory,
             'products' => $products,
             'category' => $category,
-            'p' => $p
         ]);
     }
 

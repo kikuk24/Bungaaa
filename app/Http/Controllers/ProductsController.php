@@ -17,9 +17,11 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::leftJoin('category_products', 'category_products.id', '=', 'category_product_id')
-        ->orderBy('id', 'desc')
-        ->get(['products.id', 'products.title', 'products.price', 'products.image', 'products.slug',  'category_products.name as category', 'category_products.slug AS category_slug']);
+        $products =
+            Products::with('category')->get();
+        // $products = Products::leftJoin('category_products', 'category_products.id', '=', 'category_product_id')
+        // ->orderBy('id', 'desc')
+        // ->get(['products.id', 'products.title', 'products.price', 'products.image', 'products.slug',  'category_products.name as category', 'category_products.slug AS category_slug']);
         $category = category_products::all();
         return Inertia::render("Products", [
             'products' => $products,

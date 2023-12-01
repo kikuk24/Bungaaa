@@ -1,0 +1,1 @@
+import{j as a}from"./app-b99ad30c.js";import{N as r,F as o}from"./Navbar-45874bba.js";import{C as s}from"./CardProduct-ee4881fb.js";const u=t=>a.jsxs("main",{className:"bg-page",children:[a.jsx(r,{auth:t.auth}),a.jsx(s,{products:t.products,category:t.category}),a.jsx(o,{category:t.category})]});export{u as default};
