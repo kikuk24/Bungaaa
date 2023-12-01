@@ -86,11 +86,11 @@ class ProductsController extends Controller
     {
         $product = Products::where('slug', $slug)->with('category')->first();
 
-        $products = Products::latest();
+        $products = Products::with('category')->limit(16)->get();
         $category = category_products::all();
         return Inertia::render("ShowProduct", [
             'product' => $product,
-            'products' => $products->get(),
+            'products' => $products,
             'category' => $category
         ]);
     }
