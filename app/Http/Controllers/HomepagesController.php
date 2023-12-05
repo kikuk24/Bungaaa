@@ -19,10 +19,8 @@ class HomepagesController extends Controller
     public function index()
     {
 
-        $products = Products::leftJoin('category_products', 'category_products.id', '=', 'category_product_id')
-        ->orderBy('id', 'desc')
-            ->limit('16')
-            ->get(['products.id', 'products.title', 'products.price', 'products.image', 'products.slug',  'category_products.name as category', 'category_products.slug AS category_slug']);
+
+        $products = Products::with('category')->get();
         $category = category_products::all();
         $artikel = Posts::latest()->limit('3')->get();
         $meta = homepages::where('id', 1)->first();

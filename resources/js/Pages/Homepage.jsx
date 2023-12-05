@@ -6,6 +6,7 @@ import Carousel from "@/Components/Home/Carousel";
 import Navbar from "@/Components/Navbar";
 import { Head } from "@inertiajs/react";
 export default function Homepage(props) {
+    console.log(props);
     return (
         <main className="bg-page">
             <Head>
