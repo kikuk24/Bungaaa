@@ -1,5 +1,6 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import frenchStrings from "react-timeago/lib/language-strings/fr";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 const ShowProd = ({ product, products }) => {
     const [images, setImages] = useState({
         img1: product.image,
@@ -7,15 +8,21 @@ const ShowProd = ({ product, products }) => {
         img3: product.image_2,
         img4: product.image_3,
     });
+
     const [actImg, setActImg] = useState(images.img1);
-    console.log(product);
+    const [html, setHtml] = useState("");
+    useEffect(() => {
+        setHtml(product.description);
+    }, [html]);
+    const formatter = buildFormatter(frenchStrings);
+
     return (
         <>
             <div className="w-full text-black bg-white h-min-scren mt-[60px] grid md:grid-cols-2 gap-3 py-6 grid-cols-1">
                 <div className="container flex flex-col gap-6 items-center justify-center p-5">
                     <img
                         src={`/storage/${actImg}`}
-                        alt=""
+                        alt={product.title}
                         className="w-[350px] h-full aspect-square object-cover"
                     />
                     <div className="flex flex-row justify-between h-24 gap-2">
@@ -49,8 +56,13 @@ const ShowProd = ({ product, products }) => {
                     <p className="text-xl text-slate-500 capitalize">
                         {product.category.name}
                     </p>
-                    <h1 className="font-bold text-[40px]">{product.title}</h1>
-                    <p className="text-xl">{product.description}</p>
+                    <h1 className="font-bold text-[40px] capitalize">
+                        {product.title}
+                    </h1>
+                    <p
+                        className="text-xl"
+                        dangerouslySetInnerHTML={{ __html: html }}
+                    ></p>
                     <p className="text-xl my-4">
                         Rp{" "}
                         {product.price.toLocaleString("id", "ID", {

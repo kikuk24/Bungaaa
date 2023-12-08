@@ -124,8 +124,14 @@ class ProductsController extends Controller
         //     'image'=>'mimes:jpeg,png,jpg|max:2048|image'
         // ]);
         $extFile = $request->image->getClientOriginalExtension();
-        $fileName = $request->slug . "." . $extFile;
-
+        $extFile1 = $request->image_1->getClientOriginalExtension();
+        $extFile2 = $request->image_2->getClientOriginalExtension();
+        $extFile3 = $request->image_3->getClientOriginalExtension();
+        $slug = Str::slug($request->title, '-');
+        $fileName = $slug . "." . $extFile;
+        $fileName1 = $slug . "-1." . $extFile1;
+        $fileName2 = $slug . "-2." . $extFile2;
+        $fileName3 = $slug . "-3." . $extFile3;
         $imgPath = storage_path('app/public/' . $products->image);
         if (File::exists($imgPath)) {
             File::delete($imgPath);
@@ -135,6 +141,9 @@ class ProductsController extends Controller
                 'price' => $request->price,
                 'slug' => $request->slug,
                 'image' => $request->image->storeAs('images/products', $fileName),
+                'image_1' => $request->image->storeAs('images/products', $fileName1),
+                'image_2' => $request->image->storeAs('images/products', $fileName2),
+                'image_3' => $request->image->storeAs('images/products', $fileName3),
             ]);
         } else {
             $products->update(
@@ -144,7 +153,10 @@ class ProductsController extends Controller
                 'description' => $request->description,
                 'price' => $request->price,
                 'slug' => $request->slug,
-                // 'image' => $request->image->storeAs('images/products', $fileName),
+                    'image' => $request->image->storeAs('images/products', $fileName),
+                    'image_1' => $request->image->storeAs('images/products', $fileName1),
+                    'image_2' => $request->image->storeAs('images/products', $fileName2),
+                    'image_3' => $request->image->storeAs('images/products', $fileName3),
             ]);
         }
         return redirect()->route('product')->with('message', 'Product Berhasil diedit');

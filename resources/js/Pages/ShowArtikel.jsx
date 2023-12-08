@@ -8,7 +8,6 @@ import TimeAgo from "react-timeago";
 import frenchStrings from "react-timeago/lib/language-strings/fr";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 export default function ShowArtikel(props) {
-    console.log(props);
     const [html, setHtml] = useState("");
     useEffect(() => {
         setHtml(props.artikel.content);

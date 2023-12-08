@@ -12,6 +12,15 @@ export default function Homepage(props) {
             <Head>
                 <title>{!props.meta.title ? "Home" : props.meta.title}</title>
                 <meta name="description" content={props.meta.description} />
+                <meta property="og:title" content={props.meta.title} />
+                <meta
+                    property="og:description"
+                    content={props.meta.description}
+                />
+                <meta
+                    property="og:image"
+                    content={`storage/${props.images[0]}`}
+                />
             </Head>
             <Navbar auth={props.auth} />
             <Carousel autoSlide={true}>

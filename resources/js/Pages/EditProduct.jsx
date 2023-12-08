@@ -1,5 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
+import { useRef } from "react";
+import JoditEditor from "jodit-react";
 export default function EditProduct(props) {
     const { data, setData, errors, post, progress, processing } = useForm({
         title: props.products.title,
@@ -8,6 +10,9 @@ export default function EditProduct(props) {
         slug: props.products.slug,
         category: props.category.id,
         image: props.products.image,
+        image_1: props.products.image_1,
+        image_2: props.products.image_2,
+        image_3: props.products.image_3,
     });
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -18,9 +23,14 @@ export default function EditProduct(props) {
         setData("price", props.products.price);
         setData("slug", props.products.slug);
         setData("image", props.products.image);
+        setData("image_1", props.products.image_1);
+        setData("image_2", props.products.image_2);
+        setData("image_3", props.products.image_3);
         setData("category", props.category.id);
     };
+    const editor = useRef(null);
 
+    console.log(props);
     return (
         <AuthenticatedLayout
             user={props.auth.user}
@@ -55,21 +65,7 @@ export default function EditProduct(props) {
                                         {errors.title}
                                     </span>
                                 )}
-                                <label htmlFor="description">Deskripsi</label>
-                                <input
-                                    type="text"
-                                    value={data.description}
-                                    label="description"
-                                    name="description"
-                                    onChange={(e) =>
-                                        setData("description", e.target.value)
-                                    }
-                                />
-                                {errors.description && (
-                                    <span className="text-red-600 my-1">
-                                        {errors.description}
-                                    </span>
-                                )}
+
                                 <label htmlFor="price">Harga</label>
                                 <input
                                     type="number"
@@ -85,7 +81,7 @@ export default function EditProduct(props) {
                                         {errors.price}
                                     </span>
                                 )}
-                                <label htmlFor="image">Gambar</label>
+                                <label htmlFor="image">Cover</label>
                                 <input
                                     type="file"
                                     label="image"
@@ -110,6 +106,36 @@ export default function EditProduct(props) {
                                         </div>
                                     </div>
                                 )}
+                                <label htmlFor="image">Gambar</label>
+                                <input
+                                    type="file"
+                                    label="image"
+                                    name="image"
+                                    className="file-input file-input-ghost w-full"
+                                    onChange={(e) =>
+                                        setData("image_1", e.target.files[0])
+                                    }
+                                />
+                                <label htmlFor="image">Gambar</label>
+                                <input
+                                    type="file"
+                                    label="image"
+                                    name="image"
+                                    className="file-input file-input-ghost w-full"
+                                    onChange={(e) =>
+                                        setData("image_2", e.target.files[0])
+                                    }
+                                />
+                                <label htmlFor="image">Gambar</label>
+                                <input
+                                    type="file"
+                                    label="image"
+                                    name="image"
+                                    className="file-input file-input-ghost w-full"
+                                    onChange={(e) =>
+                                        setData("image_3", e.target.files[0])
+                                    }
+                                />
                                 <label htmlFor="category">Kategori</label>
                                 <select
                                     name="category"
@@ -125,9 +151,6 @@ export default function EditProduct(props) {
                                         props.category.map(
                                             (categori, index) => (
                                                 <option
-                                                    defaultChecked={
-                                                        data.category
-                                                    }
                                                     key={index}
                                                     value={categori.id}
                                                 >
@@ -136,11 +159,27 @@ export default function EditProduct(props) {
                                             )
                                         )}
                                 </select>
+                                <label htmlFor="description">Deskripsi</label>
+                                <JoditEditor
+                                    className="w-full h-96"
+                                    ref={editor}
+                                    name="content"
+                                    tabIndex={1}
+                                    value={data.description}
+                                    onChange={(newContent) => {
+                                        setData("description", newContent);
+                                    }}
+                                />
+                                {errors.description && (
+                                    <span className="text-red-600 my-1">
+                                        {errors.description}
+                                    </span>
+                                )}
                                 <button
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className="btn btn-primary mt-3"
                                 >
-                                    Add
+                                    Simpan Perubahan
                                 </button>
                             </form>
                         </div>

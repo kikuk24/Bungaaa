@@ -1,6 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
+import { useRef } from "react";
+import JoditEditor from "jodit-react";
 export default function CreateProducts(props) {
+    const editor = useRef(null);
+
     const { data, setData, errors, post, progress } = useForm({
         title: "",
         description: "",
@@ -59,21 +63,7 @@ export default function CreateProducts(props) {
                                         {errors.title}
                                     </span>
                                 )}
-                                <label htmlFor="description">Deskripsi</label>
-                                <input
-                                    type="text"
-                                    value={data.description}
-                                    label="description"
-                                    name="description"
-                                    onChange={(e) =>
-                                        setData("description", e.target.value)
-                                    }
-                                />
-                                {errors.description && (
-                                    <span className="text-red-600 my-1">
-                                        {errors.description}
-                                    </span>
-                                )}
+
                                 <label htmlFor="price">Harga</label>
                                 <input
                                     type="number"
@@ -161,6 +151,22 @@ export default function CreateProducts(props) {
                                         </option>
                                     ))}
                                 </select>
+                                <label htmlFor="description">Deskripsi</label>
+                                <JoditEditor
+                                    className="w-full h-96"
+                                    ref={editor}
+                                    name="content"
+                                    tabIndex={1}
+                                    value={data.description}
+                                    onChange={(newContent) => {
+                                        setData("description", newContent);
+                                    }}
+                                />
+                                {errors.description && (
+                                    <span className="text-red-600 my-1">
+                                        {errors.description}
+                                    </span>
+                                )}
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
