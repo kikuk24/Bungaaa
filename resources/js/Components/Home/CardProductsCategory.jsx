@@ -7,13 +7,13 @@ const isProduct = ({ products, category }) => {
                 <h1 className="md:text-2xl text-black font-bold">
                     Category : {products.name}
                 </h1>
-                <div className="mt-3 ">
-                    <ul className="flex flex-row flex-warp gap-2">
+                <div className="mt-3">
+                    <ul className="flex flex-row gap-2 overflow-y-auto">
                         {category.map((ca, i) => (
-                            <li key={i} className="">
+                            <li key={i} className="flex">
                                 <Link
                                     href={`/category/${ca.slug}`}
-                                    className="border-2 border-[#D988B9] p-2 rounded-full text-[#B0578D]"
+                                    className="border-2 border-[#D988B9] p-2 rounded-full text-[#B0578D] w-max capitalize"
                                 >
                                     {ca.name}
                                 </Link>

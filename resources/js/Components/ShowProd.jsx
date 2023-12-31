@@ -19,11 +19,11 @@ const ShowProd = ({ product, products }) => {
     return (
         <>
             <div className="w-full text-black bg-white h-min-scren mt-[60px] grid md:grid-cols-2 gap-3 py-6 grid-cols-1">
-                <div className="container flex flex-col gap-6 items-center justify-center p-5">
+                <div className="container flex flex-col gap-6 items-center">
                     <img
                         src={`/storage/${actImg}`}
                         alt={product.title}
-                        className="w-[350px] h-full aspect-square object-cover"
+                        className="w-[350px] aspect-square object-cover"
                     />
                     <div className="flex flex-row justify-between h-24 gap-2">
                         <img
@@ -76,7 +76,7 @@ const ShowProd = ({ product, products }) => {
                         rel="noopener noreferrer"
                         className="w-full bg-slate-300 p-3 hover:bg-red-500"
                     >
-                        Beli Sekarang{" "}
+                        Beli Lewat WhatsApp{" "}
                     </a>
                 </div>
             </div>

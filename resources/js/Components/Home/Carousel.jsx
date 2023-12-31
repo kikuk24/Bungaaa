@@ -26,7 +26,7 @@ const Carousel = ({
     return (
         <div className="overflow-hidden relative mt-[60px]">
             <div
-                className="flex transition-transform ease-out duration-500 md:max-h-[540px] max-h-[250px]"
+                className="flex transition-transform ease-out duration-500 md:max-h-[540px] max-h-[190px] items-center"
                 style={{ transform: `translateX(-${curr * 100}%)` }}
             >
                 {images}

@@ -18,8 +18,7 @@ class HomepagesController extends Controller
      */
     public function index()
     {
-
-
+        $categoryProducts = category_products::with('products')->get();
         $products = Products::with('category')->get();
         $category = category_products::all();
         $artikel = Posts::latest()->limit('3')->get();
@@ -30,7 +29,8 @@ class HomepagesController extends Controller
             'products' => $products,
             'artikel' => $artikel,
             'category' => $category,
-            'images' => $images
+            'images' => $images,
+            'prod' => $categoryProducts
         ]);
     }
 

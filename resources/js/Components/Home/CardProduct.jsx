@@ -7,13 +7,13 @@ const isProduct = ({ products, category }) => {
                 <h1 className="md:text-2xl text-black font-bold">
                     Rekomendasi Produk Terbaru
                 </h1>
-                <div className="mt-3 ">
-                    <ul className="flex flex-row flex-warp gap-2">
+                <div className="relative mt-3 ">
+                    <ul className="flex flex-row gap-2 overflow-y-auto no-scrollbar">
                         {category.map((ca, i) => (
-                            <li key={i} className="">
+                            <li key={i} className="flex">
                                 <Link
                                     href={`/category/${ca.slug}`}
-                                    className="border-2 border-[#D988B9] p-2 rounded-full text-[#B0578D]"
+                                    className="border-2 border-[#D988B9] text-[#B0578D] capitalize px-4 py-2 rounded-full w-max"
                                 >
                                     {ca.name}
                                 </Link>
@@ -22,19 +22,19 @@ const isProduct = ({ products, category }) => {
                     </ul>
                 </div>
             </div>
-            <div className="w-fit grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-7 mt-10 mb-5">
+            <div className="w-fit flex flex-wrap  justify-start gap-7 mt-10 mb-5">
                 {products.map((product) => (
                     <div
                         key={product.id}
-                        className="md:w-72 w-[10rem]  bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                        className="w-64  bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                     >
                         <Link href={`/products/${product.slug}`}>
                             <img
                                 src={`/storage/${product.image}`}
                                 alt={product.title}
-                                className="md:h-60 h-32  w-60 md:w-72 object-cover rounded-t-xl"
+                                className="md:h-60 h-32  w-full md:w-72 object-cover rounded-t-xl"
                             />
-                            <div className="px-4 py-3 md:w-72">
+                            <div className="px-4 py-3 md:w-64">
                                 <span className="text-gray-400 mr-3 uppercase text-xs">
                                     {product.category.name}
                                 </span>
@@ -42,7 +42,7 @@ const isProduct = ({ products, category }) => {
                                     {product.title}
                                 </p>
                                 <div className="flex items-center">
-                                    <p className="md:text-lg font-semibold text-black cursor-auto my-3">
+                                    <p className="md:text-lg font-semibold text-black cursor-auto my-1">
                                         Rp{" "}
                                         {product.price.toLocaleString(
                                             "id",

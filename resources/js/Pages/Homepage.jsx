@@ -1,6 +1,7 @@
 import Footer from "@/Components/Footer"
 import BlogSection from "@/Components/Home/BlogSection";
 import CardBlog from "@/Components/Home/CardBlog";
+import CardP from "@/Components/Home/CardP";
 import CardProduct from "@/Components/Home/CardProduct";
 import Carousel from "@/Components/Home/Carousel";
 import Navbar from "@/Components/Navbar";
@@ -30,12 +31,13 @@ export default function Homepage(props) {
                             key={s.id}
                             src={`storage/${s.image}`}
                             alt={s.image}
-                            className="w-full h-[50%]"
+                            className="min-w-full h-[370px] object-cover rounded-md md:p-9 p-0"
                         />
                     )),
                     // <video src={vid} autoPlay muted loop />,
                 ]}
             </Carousel>
+            <CardP prod={props.prod} />
             <CardProduct products={props.products} category={props.category} />
             {props.artikel.lenght !== 0 && (
                 <>
